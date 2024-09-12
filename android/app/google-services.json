@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "789264753969",
+    "project_id": "nutrition-tpkhuj",
+    "storage_bucket": "nutrition-tpkhuj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789264753969:android:5827a29f9835222694fc10",
+        "android_client_info": {
+          "package_name": "com.example.wellness_ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789264753969-0atu2tt2ogdbjkbnagclfh6v2836kamc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALazYdYNXFhyud_wtyCphB3JrMh2o5NY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789264753969-0atu2tt2ogdbjkbnagclfh6v2836kamc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,13 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
+    id 'com.google.gms.google-services'
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+
 }
+
+apply plugin: 'com.google.gms.google-services'
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
@@ -38,7 +42,7 @@ android {
         applicationId = "com.example.wellness_ai"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
+        minSdk = 25
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
@@ -48,7 +52,8 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            shrinkResources false
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -56,3 +61,9 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies{
+    implementation platform ('com.google.firebase:firebase-bom:33.2.0')
+
+}
+

@@ -2,9 +2,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'wellness_screen.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();  // Ensures Firebase is initialized before running the app
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: 'AIzaSyALazYdYNXFhyud_wtyCphB3JrMh2o5NY4',
+        appId: '1:789264753969:android:5827a29f9835222694fc10',
+        messagingSenderId: '789264753969-0atu2tt2ogdbjkbnagclfh6v2836kamc.apps.googleusercontent.com',
+        projectId: 'nutrition-tpkhuj',
+        storageBucket: 'myapp-b9yt18.appspot.com',
+      )
+  );  // Ensures Firebase is initialized before running the app
   runApp(MyApp());
 }
 

@@ -9,9 +9,9 @@ void main() async {
       options: FirebaseOptions(
         apiKey: 'AIzaSyALazYdYNXFhyud_wtyCphB3JrMh2o5NY4',
         appId: '1:789264753969:android:5827a29f9835222694fc10',
-        messagingSenderId: '789264753969-0atu2tt2ogdbjkbnagclfh6v2836kamc.apps.googleusercontent.com',
+        messagingSenderId: '789264753969-e3dilc6mr3706iolq21l8ofc2g6g7ku2.apps.googleusercontent.com',
         projectId: 'nutrition-tpkhuj',
-        storageBucket: 'myapp-b9yt18.appspot.com',
+        storageBucket: 'nutrition-tpkhuj.appspot.com',
       )
   );  // Ensures Firebase is initialized before running the app
   runApp(MyApp());

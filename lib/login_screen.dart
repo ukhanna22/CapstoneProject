@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'home_page.dart'; // Assuming HomePage shows after login
+import 'home_page.dart';
+import 'signup_screen.dart';  // Assuming you have a SignUpScreen for registration
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  bool _obscurePassword = true;  // Add this boolean to control password visibility
+  bool _obscurePassword = true; // For controlling password visibility
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -32,16 +33,27 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => HomePage(name: name)),
       );
     } catch (e) {
-      print('Failed to log in: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to log in')));
+      if (e is FirebaseAuthException) {
+        if (e.code == 'user-not-found') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user found for that email. Please sign up first.')));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+        } else if (e.code == 'wrong-password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Incorrect password. Please try again.')));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to log in: ${e.message}')));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to log in')));
+      }
     }
   }
 
   // Log In with Google
   Future<void> _loginWithGoogle() async {
     try {
+      await _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return;  // User canceled the sign-in
+      if (googleUser == null) return; // User canceled the sign-in
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -52,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
       UserCredential userCredential = await _auth.signInWithCredential(credential);
       String uid = userCredential.user!.uid;
 
-      // Check if user exists in Firestore, if not, store their name
+      // Check if user already exists in Firestore, if not, store their name and email
       DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
       if (!doc.exists) {
         await _firestore.collection('users').doc(uid).set({
@@ -67,8 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => HomePage(name: googleUser.displayName ?? 'User')),
       );
     } catch (e) {
-      print('Failed to log in with Google: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to log in with Google')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to log in with Google: ${e.toString()}')));
     }
   }
 
@@ -106,12 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () {
                   setState(() {
-                    _obscurePassword = !_obscurePassword;  // Toggle visibility
+                    _obscurePassword = !_obscurePassword; // Toggle visibility
                   });
                 },
               ),
             ),
-            obscureText: _obscurePassword,  // Control password visibility
+            obscureText: _obscurePassword, // Control password visibility
           ),
 
           SizedBox(height: 20),

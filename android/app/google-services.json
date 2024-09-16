@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "789264753969-e3dilc6mr3706iolq21l8ofc2g6g7ku2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wellness_ai",
+            "certificate_hash": "c799fcdce4f58027cc39b13680e1966c0a3285b6"
+          }
+        },
+        {
           "client_id": "789264753969-0atu2tt2ogdbjkbnagclfh6v2836kamc.apps.googleusercontent.com",
           "client_type": 3
         }

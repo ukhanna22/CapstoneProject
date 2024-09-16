@@ -12,10 +12,7 @@ class HomePage extends StatelessWidget {
         title: Text('Welcome'),
       ),
       body: Center(
-        child: Text(
-          'Hi, $name',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+        child: Text('Hi, $name!'),  // Display the user's name
       ),
     );
   }

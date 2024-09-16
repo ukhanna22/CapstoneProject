@@ -48,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // Sign Up with Google
   Future<void> _signUpWithGoogle() async {
     try {
+      await _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) return; // User canceled the sign-in
 
